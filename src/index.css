@@ -36,6 +36,18 @@
   border: 0;
   box-sizing: border-box;
 }
+.dark{
+  --color-gray-0: #0e0d14;
+    --color-gray-100: #2f2b42;
+    --color-gray-200: #45405e;
+    --color-gray-300: #7b7b7b;
+    --color-gray-400: #919191;
+    --color-gray-500: #a1a1a1;
+    --color-gray-600: #c0c0c0;
+    --color-gray-700: #e6e5e5;
+    --color-gray-800: #fafafa;
+    --color-gray-900: #fff;
+}
 
   body{
     font-family: "Montserrat",sans-serif;
@@ -167,3 +179,227 @@ nav {
  justify-content: space-between;
 }
 
+.nav__container div{
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+.nav__logo{
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.nav__toggle-btn{
+  background: transparent;
+  font-size: 1.8rem;
+  display: none;
+}
+.nav__container a{
+  transition: var(--transition);
+}
+.nav__container a:hover{
+  color: var(--color-primary-variant);
+}
+
+.nav__container menu{
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+.theme__toggle-btn{
+  background: transparent;
+  font-size: 1.5rem;
+  display: flex;
+  transition: var(--transition);
+}
+.theme__toggle-btn:hover{
+  opacity: 0.75;
+}
+
+
+
+
+/*=========================================Register======================*/
+
+
+.register{
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+
+.register__container{
+  width: 35rem;
+  background: var(--color-gray-0);
+  padding: 3rem;
+  border-radius: var(--radius-5);
+}
+.register__container H2{
+  margin-bottom: 2rem;
+  color: var(--color-primary);
+}
+.register form{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.register form input{
+  padding: 0.7rem;
+  background: var(--color-gray-100);
+  border-radius: var(--radius-1);
+  color: var(--color-gray-900);
+}
+
+.register form p > a {
+ color: var(--color-primary);
+ font-weight: 500;
+}
+.form__error-message{
+  background: var(--color-danger);
+  color: var(--color-gray-0);
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius-1);
+}
+
+
+
+
+
+
+
+/*=================Result=============================*/
+
+.results{
+  margin: 5rem 0;
+  width: 58rem;
+  margin-inline: auto;
+}
+.results__container{
+  display: flex;
+  flex-direction: column;
+}
+.result{
+  background: var(--color-gray-0);
+  border-radius: var(--radius-4);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.result__header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-gray-100);
+  border: 0.5rem solid var(--color-gray-0);
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+
+.result__header-image{
+  width: 3rem;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 1.5rem;
+}
+.result__header h4{
+  padding: 1.5rem;
+}
+
+.result__list{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  padding-top: 1rem;
+}
+
+.result__candidate{
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.result__candidate-image{
+  height: 3.5rem;
+  aspect-ratio: 1/1;
+  border-radius: 1rem;
+  overflow:hidden ;
+}
+
+.result__candidate-info{
+  width: 100%;
+}
+.result__candidate-rating{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.result__candidate-loader{
+  display: block;
+  width: 100%;
+  height: 0.4rem;
+  background: var(--color-gray-100);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.result__candidate-loader span{
+  background: linear-gradient(90deg,var(--color-primary-variant));
+  height: 100%;
+  display: block;
+}
+
+
+
+
+
+
+
+
+/*===============Media Queries(small screens)
+===================================================*/
+ @media screen and (max-width:600px) {
+  .container{
+    width: var(--container-w-sm);
+  }
+  nav{
+   height: 4rem;
+  }
+  .nav__container div{
+    gap: 3rem;
+  }
+  .nav__toggle-btn{
+    display: inline-block;
+  }
+  .nav__container menu{
+    position: fixed;
+    top: 4rem;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    width: 12rem;
+  }
+ .nav__container menu a {
+  background: var(--color-gray-0);
+  color: var(--color-gray-900);
+  border-bottom: 1px solid var(--color-gray-200);
+  width: 100%;
+  display: grid;
+  place-items: center;
+  height: 4rem;
+  box-shadow: -2rem 4rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+.errorPage__container {
+  width: 100%;
+}
+.register__container{
+  padding: 3rem 1.5rem;
+}
+.results{
+  width: var(--container-w-sm);
+}
+ }
