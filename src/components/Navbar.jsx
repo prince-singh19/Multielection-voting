@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { HiOutlineBars3 } from 'react-icons/hi2'
 import { IoIosMoon, IoMdSunny } from 'react-icons/io'
+import { useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 
 const Navbar = () => {
     const [showNav,setShowNav]=useState(window.innerWidth<600 ? false :true);
     const [darkTheme,setDarkTheme]=useState(localStorage.getItem('voting-app-theme')||"")
+
+   const token = useSelector(state => state?.vote?.currentVoter?.token);
 
     const closeNavMenu = ()=>{
         if(window.innerWidth<600){
@@ -34,10 +37,10 @@ const Navbar = () => {
     <nav>
    <div className="container nav__container">
      
-   <Link  to="/" className="nav__logo">EGATOR</Link>
+   <Link  to="/" className="nav__logo">ELECTIFY</Link>
 
   <div >
-    {showNav && <menu>
+    { token && showNav && <menu>
         <NavLink to="/elections" onClick={closeNavMenu}>Elections</NavLink>
          <NavLink to="/results" onClick={closeNavMenu}>Results</NavLink>
           <NavLink to="/logout" onClick={closeNavMenu}>Logout</NavLink>

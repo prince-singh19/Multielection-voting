@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UiActions } from '../store/ui-slice';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const AddCandidateModal = () => {
   const [fullName, setFullName] = useState('');
@@ -15,6 +17,36 @@ const closeModal = () => {
     dispatch(UiActions.closeAddCandidateModal())
 }
 
+const navigate = useNavigate()
+const token = useSelector(state => state?.vote?.currentVoter?.token);
+const electionId = useSelector(state => state?.vote?.addCandidateElectionId);
+const addCandidate = async (e) => {
+  try {
+    e.preventDefault()
+    const candidateInfo = new FormData();
+    candidateInfo.set('fullName',fullName)
+     candidateInfo.set('motto',motto)
+    candidateInfo.set('image',image)
+     candidateInfo.set('currentElection',electionId)
+     await axios.post(
+      `${process.env.REACT_APP_API_URL}/candidates`,candidateInfo,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    )
+  navigate(0)
+
+ 
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
   return (
     <section className="modal">
       <div className="modal__content">
@@ -24,7 +56,7 @@ const closeModal = () => {
             <IoMdClose />
           </button>
         </header>
-        <form>
+        <form onSubmit={addCandidate} >
           <div>
             <h6>Candidate Name:</h6>
             <input

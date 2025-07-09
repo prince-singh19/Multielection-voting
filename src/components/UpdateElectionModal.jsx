@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UiActions } from '../store/ui-slice';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateElectionModal = () => {
 
@@ -11,9 +13,72 @@ const [description,setDescription] =useState("")
 const [thumbnail,setThumbnail] =useState("")
 
 const dispatch =useDispatch();
+const idOfElectionToUpdate = useSelector(state => state?.vote?.idOfElectionToUpdate)
+
    const closeModal = ()=>{
     dispatch(UiActions.closeUpdateElectionModal())
    }
+
+
+const token = useSelector(state => state?.vote?.currentVoter?.token);
+const navigate = useNavigate()
+
+const fetchElection = async (e) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/elections/${idOfElectionToUpdate}`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    const election = await response.data;
+  setTitle(election.title)
+  setDescription(election.description)
+
+ 
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+useEffect ( () =>{
+  fetchElection();
+},[])
+
+
+
+
+const updateElection = async (e) => {
+  e.preventDefault();
+
+  try {
+    const electionData = new FormData();
+    electionData.set('title', title);
+    electionData.set('description', description);
+    electionData.set('thumbnail', thumbnail);
+
+    const response = await axios.patch(
+      `${process.env.REACT_APP_API_URL}/elections/${idOfElectionToUpdate}`,
+      electionData,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    closeModal()
+  navigate(0)
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
 
   return (
     <section className="modal">
@@ -24,14 +89,14 @@ const dispatch =useDispatch();
             <IoMdClose />
           </button>
         </header>
-        <form>
+        <form onSubmit={updateElection} >
           <div>
             <h6>Election Title:</h6>
             <input type="text" value={title} onChange={e => setTitle(e.target.value)} name="title" />
           </div>
           <div>
             <h6>Election Description:</h6>
-            <input type="text"  value={title} onChange={e => setDescription(e.target.value)} name="description" />
+            <input type="text"  value={description} onChange={e => setDescription(e.target.value)} name="description" />
           </div>
            <div>
             <h6>Election Thumbnail:</h6>
